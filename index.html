@@ -3,467 +3,683 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Rasmalai ❤️</title>
+    <title>For My Rasmalai ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap');
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --pink: #ff6b9d;
+            --purple: #9b59b6;
+            --lavender: #d4a5ff;
+            --gold: #ffd700;
+            --dark: #0d0621;
+            --card-bg: rgba(255,255,255,0.04);
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: #1a0b2e; /* Deep dreamy purple */
+            background: var(--dark);
             color: white;
             overflow-x: hidden;
-            height: 100vh;
-            width: 100vw;
-            position: relative;
         }
 
-        /* Moving Stars Background */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
+        /* ── CURSOR ── */
+        .cursor-dot { width: 22px; height: 22px; position: fixed; pointer-events: none; z-index: 99999; font-size: 18px; transform: translate(-50%,-50%); }
+        @media (pointer: coarse) { .cursor-dot { display:none; } }
 
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle infinite alternate;
-        }
+        /* ── CANVAS ── */
+        #bgCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 
-        @keyframes twinkle {
-            0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
+        /* ── PROGRESS BAR ── */
+        #progressBar { position: fixed; top: 0; left: 0; height: 4px; width: 0%; z-index: 10000; background: linear-gradient(90deg, var(--pink), var(--lavender), var(--gold)); transition: width .1s; }
 
-        /* Sections Setup */
-        .section {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1s ease, transform 1s ease;
-            z-index: 10;
-            background: radial-gradient(circle at center, rgba(74, 20, 140, 0.4) 0%, #1a0b2e 100%);
-        }
+        /* ── NAV DOTS ── */
+        #navDots { position: fixed; right: 14px; top: 50%; transform: translateY(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 9px; }
+        .ndot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.25); border: 1.5px solid rgba(255,255,255,.3); cursor: pointer; transition: all .3s; }
+        .ndot.on { background: var(--lavender); transform: scale(1.5); }
+        @media (max-width:480px) { #navDots { display:none; } }
 
-        .section.active {
-            opacity: 1;
-            pointer-events: all;
-            transform: scale(1);
-        }
+        /* ── SECTIONS ── */
+        section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 22px; position: relative; z-index: 1; text-align: center; }
+        #s1 { background: radial-gradient(ellipse at 50% 40%, #1e0a3a 0%, #0d0621 100%); }
+        #s2 { background: radial-gradient(ellipse at 30% 60%, #2a0d1e 0%, #0d0621 100%); }
+        #s3 { background: radial-gradient(ellipse at 70% 30%, #0d1e3a 0%, #0d0621 100%); }
+        #s4 { background: radial-gradient(ellipse at 40% 70%, #1a1a0a 0%, #0d0621 100%); }
+        #s5 { background: radial-gradient(ellipse at 60% 40%, #1e0a1e 0%, #0d0621 100%); }
+        #s6 { background: radial-gradient(ellipse at 30% 30%, #0a2a1a 0%, #0d0621 100%); }
+        #s7 { background: radial-gradient(ellipse at 70% 70%, #2a1a0a 0%, #0d0621 100%); }
+        #s8 { background: radial-gradient(ellipse at 50% 50%, #1e0a2e 0%, #0d0621 100%); }
+        #s9 { background: radial-gradient(ellipse at 50% 50%, #2a0a1a 0%, #0d0621 100%); }
+        #s10{ background: radial-gradient(ellipse at 50% 50%, #0a1a2a 0%, #0d0621 100%); }
 
-        .section.hidden-up {
-            transform: translateY(-50px) scale(0.95);
-        }
+        /* ── TYPE ── */
+        h1  { font-family:'Dancing Script',cursive; font-size:clamp(2.8rem,10vw,5.5rem); color:var(--lavender); text-shadow:0 0 30px rgba(212,165,255,.45); line-height:1.15; margin-bottom:16px; }
+        h2  { font-family:'Dancing Script',cursive; font-size:clamp(2rem,7vw,3.5rem); color:var(--pink); text-shadow:0 0 18px rgba(255,107,157,.4); margin-bottom:22px; }
+        h3  { font-family:'Dancing Script',cursive; font-size:clamp(1.5rem,5vw,2.4rem); color:var(--gold); margin-bottom:18px; }
+        p   { font-size:clamp(.95rem,2.5vw,1.12rem); line-height:1.9; max-width:640px; color:rgba(255,255,255,.85); margin-bottom:14px; }
+        .hi { color:var(--pink); font-weight:600; }
+        .go { color:var(--gold); font-weight:600; }
+        .lv { color:var(--lavender); }
+        .divider { width:55px; height:3px; background:linear-gradient(90deg,var(--pink),var(--lavender)); border-radius:3px; margin:0 auto 24px; }
 
-        .section.hidden-down {
-            transform: translateY(50px) scale(0.95);
-        }
+        /* ── REVEAL ── */
+        .rv  { opacity:0; transform:translateY(38px); transition:opacity .85s ease, transform .85s ease; }
+        .rvl { opacity:0; transform:translateX(-38px); transition:opacity .85s ease, transform .85s ease; }
+        .rvr { opacity:0; transform:translateX(38px); transition:opacity .85s ease, transform .85s ease; }
+        .rv.show, .rvl.show, .rvr.show { opacity:1; transform:translate(0); }
 
-        h1, h2 {
-            font-family: 'Dancing Script', cursive;
-            margin-bottom: 20px;
-        }
+        /* ── ANIMS ── */
+        @keyframes hb  { 0%,100%{transform:scale(1)} 14%{transform:scale(1.18)} 28%{transform:scale(1)} 42%{transform:scale(1.11)} }
+        @keyframes flt { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-11px)} }
+        @keyframes glw { 0%,100%{text-shadow:0 0 12px rgba(212,165,255,.3)} 50%{text-shadow:0 0 35px rgba(212,165,255,.9),0 0 60px rgba(212,165,255,.35)} }
+        @keyframes gradShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        @keyframes bnc { 0%,100%{transform:rotate(45deg)} 50%{transform:rotate(45deg) translateY(8px)} }
+        @keyframes blink { 50%{border-color:transparent} }
+        @keyframes popIn { 0%{transform:scale(0) rotate(-15deg);opacity:0} 70%{transform:scale(1.15) rotate(3deg)} 100%{transform:scale(1) rotate(0);opacity:1} }
 
-        h1 { font-size: 3.5rem; color: #e0b0ff; text-shadow: 0 0 15px rgba(224, 176, 255, 0.5); }
-        h2 { font-size: 2.5rem; color: #ffb7b2; }
-        
-        p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            max-width: 600px;
-            margin-bottom: 20px;
-            color: #dcdde1;
-        }
+        .hb  { animation:hb 1.6s ease-in-out infinite; display:inline-block; }
+        .flt { animation:flt 3s ease-in-out infinite; display:inline-block; }
+        .glw { animation:glw 2.2s ease-in-out infinite; }
 
-        .highlight {
-            color: #ff9ff3;
-            font-weight: 600;
+        /* ── HERO NAME ── */
+        .hero-name {
+            font-family:'Dancing Script',cursive;
+            font-size:clamp(4rem,16vw,8.5rem);
+            background:linear-gradient(135deg, #ff6b9d, #d4a5ff, #ffd700, #ff6b9d);
+            background-size:300% 300%;
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+            animation:gradShift 3s ease infinite;
+            display:block; line-height:1.1;
         }
+        .scroll-hint { position:absolute; bottom:28px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,.35); font-size:.85rem; display:flex; flex-direction:column; align-items:center; gap:7px; }
+        .sarrow { width:18px; height:18px; border-right:2px solid rgba(255,255,255,.35); border-bottom:2px solid rgba(255,255,255,.35); transform:rotate(45deg); animation:bnc 1.5s infinite; }
 
-        /* Buttons */
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 30px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            background: linear-gradient(45deg, #9b59b6, #e056fd);
-            color: white;
-            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin-top: 20px;
-        }
+        /* ── MAIN BTN ── */
+        .btn-main { padding:13px 34px; border:none; border-radius:30px; font-family:'Poppins'; font-weight:600; font-size:1.05rem; cursor:pointer; background:linear-gradient(135deg,var(--purple),var(--pink)); color:white; box-shadow:0 6px 22px rgba(155,89,182,.45); transition:all .3s; margin:9px; }
+        .btn-main:hover { transform:translateY(-3px) scale(1.04); box-shadow:0 10px 30px rgba(155,89,182,.65); }
+        .btn-main:active { transform:scale(.97); }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(155, 89, 182, 0.6);
-        }
+        /* ── APOLOGY CARD ── */
+        .apology-card { background:var(--card-bg); border:1px solid rgba(255,107,157,.28); border-radius:22px; padding:clamp(24px,5vw,44px); max-width:680px; width:100%; backdrop-filter:blur(12px); box-shadow:0 0 45px rgba(255,107,157,.1); position:relative; text-align:left; }
+        .apology-card::before { content:'🙏'; position:absolute; top:-24px; left:50%; transform:translateX(-50%); font-size:2.4rem; }
 
-        /* Interactive Slider (Sorry Meter) */
-        .slider-container {
-            width: 100%;
-            max-width: 400px;
-            margin: 30px 0;
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-        }
+        /* Sorry range */
+        .sorry-wrap { margin:28px 0; width:100%; }
+        .sorry-label { font-family:'Dancing Script',cursive; font-size:1.4rem; color:var(--lavender); text-align:center; margin-bottom:10px; }
+        .sorry-bar  { height:14px; background:rgba(255,255,255,.1); border-radius:8px; overflow:hidden; border:1px solid rgba(255,107,157,.3); }
+        .sorry-fill { height:100%; width:0%; background:linear-gradient(90deg,#9b59b6,#ff6b9d,#ffd700); border-radius:8px; transition:width .25s; }
+        input[type=range].sr { width:100%; -webkit-appearance:none; background:transparent; margin:10px 0 0; }
+        input[type=range].sr::-webkit-slider-thumb { -webkit-appearance:none; width:28px; height:28px; border-radius:50%; background:var(--pink); cursor:pointer; margin-top:-11px; box-shadow:0 0 10px rgba(255,107,157,.7); }
+        input[type=range].sr::-webkit-slider-runnable-track { height:6px; background:rgba(255,255,255,.15); border-radius:3px; }
+        .sorry-result { font-family:'Dancing Script',cursive; font-size:1.9rem; color:var(--gold); text-align:center; min-height:48px; margin-top:9px; transition:all .4s; }
 
-        input[type=range] {
-            -webkit-appearance: none;
-            width: 100%;
-            background: transparent;
-        }
-        
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 30px;
-            width: 30px;
-            border-radius: 50%;
-            background: #ff9ff3;
-            cursor: pointer;
-            margin-top: -12px;
-            box-shadow: 0 0 10px #ff9ff3;
-        }
-        
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 6px;
-            cursor: pointer;
-            background: #4a235a;
-            border-radius: 3px;
-        }
+        /* ── THINGS GRID ── */
+        .things-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(195px,1fr)); gap:18px; max-width:740px; width:100%; margin-top:22px; }
+        .tc { background:var(--card-bg); border:1px solid rgba(212,165,255,.2); border-radius:18px; padding:25px 18px; cursor:pointer; transition:all .4s; position:relative; overflow:hidden; }
+        .tc::after { content:''; position:absolute; inset:0; background:radial-gradient(circle at center,rgba(212,165,255,.13),transparent); opacity:0; transition:opacity .4s; }
+        .tc:hover::after,.tc:active::after { opacity:1; }
+        .tc:hover,.tc:active { transform:translateY(-8px); border-color:var(--lavender); box-shadow:0 16px 32px rgba(212,165,255,.2); }
+        .tc-icon { font-size:2.8rem; margin-bottom:11px; display:block; animation:flt 3s ease-in-out infinite; }
+        .tc:nth-child(2) .tc-icon{animation-delay:.4s} .tc:nth-child(3) .tc-icon{animation-delay:.8s} .tc:nth-child(4) .tc-icon{animation-delay:1.2s} .tc:nth-child(5) .tc-icon{animation-delay:1.6s} .tc:nth-child(6) .tc-icon{animation-delay:2s}
+        .tc-title { font-family:'Dancing Script',cursive; font-size:1.25rem; color:var(--lavender); margin-bottom:7px; }
+        .tc-desc  { font-size:.87rem; color:rgba(255,255,255,.7); line-height:1.65; }
 
-        #sorry-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #ff9ff3;
-            margin-top: 10px;
-            font-family: 'Dancing Script', cursive;
-        }
+        /* ── LOVE LETTERS ── */
+        .ll-card { background:linear-gradient(135deg,rgba(155,89,182,.12),rgba(255,107,157,.06)); border:1px solid rgba(255,107,157,.22); border-radius:22px; padding:clamp(24px,5vw,42px); max-width:650px; width:100%; position:relative; }
+        .ll-card::before { content:'💌'; font-size:2rem; position:absolute; top:-18px; left:24px; }
+        .ls { display:none; text-align:left; animation:popIn .4s ease; }
+        .ls.on { display:block; }
+        .ls p { font-style:italic; font-size:clamp(.97rem,2.5vw,1.12rem); line-height:2.05; }
+        .ll-nav { display:flex; gap:9px; justify-content:center; margin-top:18px; }
+        .ll-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.2); cursor:pointer; transition:all .3s; border:1px solid rgba(255,255,255,.3); }
+        .ll-dot.on { background:var(--pink); transform:scale(1.35); }
+        .ll-btn { padding:8px 20px; background:rgba(255,107,157,.18); border:1px solid rgba(255,107,157,.38); border-radius:20px; color:white; cursor:pointer; font-family:'Poppins'; font-size:.88rem; transition:all .3s; }
+        .ll-btn:hover { background:rgba(255,107,157,.38); }
 
-        /* Interactive Cards (Appreciation) */
-        .cards-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
-        }
+        /* ── REASONS ── */
+        .reasons-wrap { max-width:660px; width:100%; }
+        .ri { display:flex; align-items:flex-start; gap:14px; padding:16px 18px; margin-bottom:11px; background:rgba(255,255,255,.03); border-left:3px solid var(--pink); border-radius:0 12px 12px 0; cursor:pointer; transition:all .4s; opacity:0; transform:translateX(-22px); }
+        .ri.show { opacity:1; transform:translateX(0); }
+        .ri:hover { background:rgba(255,107,157,.08); transform:translateX(5px); }
+        .ri-n { font-family:'Dancing Script',cursive; font-size:1.75rem; color:var(--pink); min-width:34px; line-height:1; }
+        .ri-t { font-size:clamp(.88rem,2vw,.99rem); color:rgba(255,255,255,.85); line-height:1.75; text-align:left; }
 
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(224, 176, 255, 0.2);
-            border-radius: 15px;
-            width: 150px;
-            height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.5s ease;
-            position: relative;
-            transform-style: preserve-3d;
-        }
+        /* ── PROMISES ── */
+        .pl-wrap { max-width:620px; width:100%; }
+        .pi { display:flex; align-items:flex-start; gap:14px; padding:16px 17px; margin-bottom:11px; background:rgba(255,255,255,.03); border:1px solid rgba(255,215,0,.15); border-radius:12px; cursor:pointer; transition:all .4s; }
+        .pi:hover { background:rgba(255,215,0,.05); border-color:rgba(255,215,0,.4); }
+        .pi.ck { border-color:var(--gold); background:rgba(255,215,0,.08); }
+        .pchk { width:26px; height:26px; border:2px solid var(--gold); border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:.85rem; transition:all .3s; color:transparent; margin-top:2px; }
+        .pi.ck .pchk { background:var(--gold); color:var(--dark); }
+        .pt { font-size:clamp(.88rem,2vw,.99rem); line-height:1.65; color:rgba(255,255,255,.85); text-align:left; }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(224, 176, 255, 0.2);
-            background: rgba(224, 176, 255, 0.1);
-        }
+        /* ── HEART TAP ── */
+        .big-heart { font-size:clamp(6rem,22vw,10rem); cursor:pointer; display:block; animation:hb 1.5s ease-in-out infinite; filter:drop-shadow(0 0 22px rgba(255,107,157,.65)); user-select:none; transition:transform .12s; }
+        .big-heart:active { transform:scale(.8); }
+        .love-counter { font-family:'Dancing Script',cursive; font-size:clamp(1.2rem,4vw,1.8rem); color:var(--lavender); margin:14px 0; }
+        .heart-msg { font-size:clamp(.95rem,2.5vw,1.1rem); color:rgba(255,255,255,.7); min-height:28px; transition:all .35s; font-style:italic; }
 
-        .card-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            transition: opacity 0.3s;
-        }
+        /* ── FORGIVENESS ── */
+        .forg-card { background:var(--card-bg); border:1px solid rgba(255,107,157,.25); border-radius:22px; padding:clamp(24px,5vw,38px); max-width:500px; width:100%; }
+        .forg-emoji { font-size:4.5rem; display:block; margin:0 auto 8px; transition:all .4s; }
+        .forg-lbl   { font-family:'Dancing Script',cursive; font-size:1.85rem; color:var(--lavender); min-height:44px; transition:all .35s; }
+        .forg-resp  { font-size:.93rem; color:rgba(255,255,255,.75); min-height:80px; line-height:1.75; margin:14px 0; padding:8px; transition:all .4s; }
+        input[type=range].fr { width:100%; -webkit-appearance:none; background:transparent; margin:14px 0; }
+        input[type=range].fr::-webkit-slider-thumb { -webkit-appearance:none; width:34px; height:34px; border-radius:50%; background:white; cursor:pointer; margin-top:-14px; box-shadow:0 0 12px rgba(255,107,157,.7); border:3px solid var(--pink); }
+        input[type=range].fr::-webkit-slider-runnable-track { height:7px; background:linear-gradient(90deg,#ff4757,#ffd700,#2ecc71); border-radius:4px; }
 
-        .card-text {
-            position: absolute;
-            opacity: 0;
-            font-size: 0.9rem;
-            padding: 10px;
-            text-align: center;
-            color: #fff;
-            transform: scale(0.8);
-            transition: all 0.3s;
-        }
+        /* Decision */
+        .dec-wrap { position:relative; height:56px; width:290px; margin:20px auto 0; }
+        .btn-yes { position:absolute; left:0; padding:14px 28px; border:none; border-radius:30px; font-family:'Poppins'; font-weight:600; font-size:1rem; cursor:pointer; background:linear-gradient(135deg,#27ae60,#2ecc71); color:white; box-shadow:0 5px 18px rgba(46,204,113,.4); transition:all .3s; }
+        .btn-yes:hover { transform:scale(1.08); }
+        .btn-no  { position:absolute; right:0; padding:14px 28px; border:none; border-radius:30px; font-family:'Poppins'; font-weight:600; font-size:1rem; cursor:pointer; background:rgba(255,255,255,.09); color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.18); transition:all .4s; }
 
-        .card.revealed .card-icon {
-            opacity: 0;
-        }
+        /* ── FINAL ── */
+        #s10 { display:none; }
+        .fin-heart { font-size:5.5rem; display:block; margin:0 auto 18px; animation:hb 1.1s ease-in-out infinite; filter:drop-shadow(0 0 28px rgba(255,107,157,.8)); }
+        .sig { font-family:'Dancing Script',cursive; font-size:clamp(1.7rem,5vw,2.4rem); color:var(--gold); margin-top:26px; line-height:1.55; }
 
-        .card.revealed .card-text {
-            opacity: 1;
-            transform: scale(1);
-        }
+        /* ── BURST ── */
+        .bst { position:fixed; pointer-events:none; z-index:99999; font-size:14px; transition:all 1.1s ease; }
 
-        /* Typewriter text */
-        .typewriter-container {
-            min-height: 150px;
-            display: flex;
-            align-items: center;
-        }
-        
-        #typewriter-text {
-            font-size: 1.3rem;
-            color: #e0b0ff;
-            border-right: 2px solid #e0b0ff;
-            padding-right: 5px;
-            animation: blink 0.75s step-end infinite;
-        }
+        /* ── TYPEWRITER ── */
+        #tw-text { border-right:2px solid var(--lavender); padding-right:4px; animation:blink .75s step-end infinite; font-style:italic; color:var(--lavender); font-size:clamp(1rem,3vw,1.25rem); }
 
-        @keyframes blink { 50% { border-color: transparent; } }
-
-        /* Runaway Button */
-        .decision-buttons {
-            display: flex;
-            gap: 20px;
-            margin-top: 30px;
-            position: relative;
-            height: 60px;
-            width: 300px;
-            justify-content: center;
-        }
-
-        .btn-yes {
-            background: #2ecc71;
-            z-index: 2;
-        }
-
-        .btn-no {
-            background: #e74c3c;
-            position: absolute;
-            z-index: 1;
-        }
-
-        /* Final Celebration */
-        .heart-fall {
-            position: fixed;
-            top: -10%;
-            font-size: 2rem;
-            animation: fall linear forwards;
-            z-index: 100;
-            pointer-events: none;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); }
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 2rem; }
-            .card { width: 130px; height: 130px; }
-            .card-icon { font-size: 2rem; }
-        }
-
+        /* Confetti */
+        @keyframes cfFall { 0%{opacity:1;transform:translateY(0) rotate(0deg)} 100%{opacity:0;transform:translateY(180px) rotate(720deg)} }
+        .cf { position:fixed; pointer-events:none; z-index:9999; animation:cfFall 1.3s ease forwards; border-radius:50%; }
     </style>
 </head>
 <body>
 
-    <div class="stars" id="stars-container"></div>
+<!-- Cursor -->
+<div class="cursor-dot" id="cur">💜</div>
+<!-- Canvas -->
+<canvas id="bgCanvas"></canvas>
+<!-- Progress -->
+<div id="progressBar"></div>
+<!-- Nav -->
+<nav id="navDots"></nav>
 
-    <!-- Section 1: Intro -->
-    <div class="section active" id="sec1">
-        <h1>Hi Rasmalai... ❤️</h1>
-        <p>I built this little place just for you, because you deserve more than just a regular text message.</p>
-        <button class="btn" onclick="nextSection(1)">See What's Inside ✨</button>
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 1 — HERO
+═══════════════════════════════════════════════════════ -->
+<section id="s1">
+    <div class="rv" style="margin-bottom:6px">
+        <span style="font-family:'Dancing Script',cursive;font-size:clamp(1.1rem,4vw,1.7rem);color:rgba(255,255,255,.45)">A message from the heart of someone who loves you...</span>
     </div>
+    <span class="hero-name rv" style="transition-delay:.2s">Rasmalai ❤️</span>
+    <p class="rv glw" style="transition-delay:.4s;font-style:italic;color:rgba(255,255,255,.6)">The most important person in my entire world</p>
+    <p class="rv" style="transition-delay:.55s;max-width:520px">I built this entire space just for you — because you deserve so much more than a simple text message. Scroll through and feel everything I could never say out loud.</p>
+    <button class="btn-main rv" style="transition-delay:.7s" onclick="gotoSection('s2')">Open My Heart 💜</button>
+    <div class="scroll-hint"><span>scroll down</span><div class="sarrow"></div></div>
+</section>
 
-    <!-- Section 2: The Apology -->
-    <div class="section hidden-down" id="sec2">
-        <h2>I am truly sorry.</h2>
-        <p>I want to deeply apologize for my odd behavior over these last few weeks. I know I haven't been myself, and I hate knowing that I might have made you feel confused or unloved.</p>
-        
-        <div class="slider-container">
-            <p>How sorry am I?</p>
-            <input type="range" min="0" max="100" value="0" id="sorrySlider" oninput="updateSorry()">
-            <div id="sorry-value">0%</div>
-        </div>
-        
-        <button class="btn" id="btn-sec2" style="display:none;" onclick="nextSection(2)">There's more... ➔</button>
-    </div>
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 2 — BIG APOLOGY
+═══════════════════════════════════════════════════════ -->
+<section id="s2">
+    <h2 class="rv">I am deeply, truly sorry. 🙏</h2>
+    <div class="divider rv"></div>
+    <div class="apology-card rv">
+        <p>My dearest <span class="hi">Rasmalai</span>,</p><br>
+        <p>I want you to read every word of this carefully, because I mean every single one of them from the deepest part of my heart.</p><br>
+        <p>The past few weeks, I have been <span class="hi">odd. Distant. Cold. Confusing.</span> And none of that is okay. None of it is what you deserve. You have been nothing but patient, caring, and loving — and in return, I gave you silence and strange behavior. I am so ashamed of that.</p><br>
+        <p>I am not going to make excuses. I messed up. My behavior was not fair to you — the one person who has stood by me through everything. I know it must have left you confused, maybe even questioning things. And the fact that you stayed, the fact that you are even reading this right now — that tells me everything about the kind of person you are.</p><br>
+        <p>You are <span class="go">extraordinary</span>, Rasmalai. And I am asking for your forgiveness with everything I have.</p><br>
 
-    <!-- Section 3: Appreciation -->
-    <div class="section hidden-down" id="sec3">
-        <h2>I notice everything you do.</h2>
-        <p>Even when I am being difficult, you never stop caring. Tap these to see what I mean:</p>
-        
-        <div class="cards-container">
-            <div class="card" onclick="revealCard(this)">
-                <div class="card-icon">👀</div>
-                <div class="card-text">How you always <span class="highlight">keep checking on me</span> to see if I'm okay.</div>
-            </div>
-            <div class="card" onclick="revealCard(this)">
-                <div class="card-icon">📞</div>
-                <div class="card-text">How you <span class="highlight">keep calling me</span> just to hear my voice.</div>
-            </div>
-            <div class="card" onclick="revealCard(this)">
-                <div class="card-icon">🩹</div>
-                <div class="card-text">How wonderfully you <span class="highlight">take care of me</span> when I need it most.</div>
-            </div>
-        </div>
-
-        <button class="btn" id="btn-sec3" style="display:none; margin-top: 40px;" onclick="startTypewriter(); nextSection(3)">Next ➔</button>
-    </div>
-
-    <!-- Section 4: Importance -->
-    <div class="section hidden-down" id="sec4">
-        <h2>You mean the world to me.</h2>
-        <div class="typewriter-container">
-            <span id="typewriter-text"></span>
-        </div>
-        <button class="btn" id="btn-sec4" style="display:none;" onclick="nextSection(4)">One last thing... ➔</button>
-    </div>
-
-    <!-- Section 5: Forgiveness -->
-    <div class="section hidden-down" id="sec5">
-        <h1>Will you forgive me? 🥺</h1>
-        <p>I promise to do better, be better, and treat you with the love you give me every single day.</p>
-        
-        <div class="decision-buttons">
-            <button class="btn btn-yes" onclick="showFinal()">Yes, I forgive you ❤️</button>
-            <button class="btn btn-no" id="runawayBtn" onmouseover="runAway()" ontouchstart="runAway()">No way 😤</button>
+        <div class="sorry-wrap">
+            <div class="sorry-label">Drag to feel exactly how sorry I am 👇</div>
+            <div class="sorry-bar"><div class="sorry-fill" id="sf"></div></div>
+            <input type="range" class="sr" min="0" max="100" value="0" oninput="doSorry(this.value)">
+            <div class="sorry-result" id="srr">Move the slider...</div>
         </div>
     </div>
+</section>
 
-    <!-- Section 6: Final -->
-    <div class="section hidden-down" id="sec6">
-        <h1 style="font-size: 5rem; margin-bottom: 0;">💖</h1>
-        <h1>Thank you, my love!</h1>
-        <p>You are the best thing that ever happened to me. I love you, Rasmalai! 💕</p>
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 3 — TYPEWRITER
+═══════════════════════════════════════════════════════ -->
+<section id="s3">
+    <h2 class="rv">What I want you to know... 💬</h2>
+    <div class="divider rv"></div>
+    <div class="rv" style="max-width:640px;background:var(--card-bg);border:1px solid rgba(212,165,255,.25);border-radius:20px;padding:clamp(24px,5vw,40px);min-height:160px;display:flex;align-items:center;justify-content:center;">
+        <span id="tw-text"></span>
     </div>
+    <p class="rv" style="transition-delay:.3s;margin-top:20px;font-size:.9rem;color:rgba(255,255,255,.4);font-style:italic">(Reading live from my heart to yours)</p>
+</section>
 
-    <script>
-        // Generate background stars
-        const starsContainer = document.getElementById('stars-container');
-        for(let i=0; i<100; i++) {
-            let star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = Math.random() * 3 + 'px';
-            star.style.height = star.style.width;
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.top = Math.random() * 100 + 'vh';
-            star.style.animationDuration = Math.random() * 2 + 1 + 's';
-            starsContainer.appendChild(star);
-        }
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 4 — THINGS SHE DOES
+═══════════════════════════════════════════════════════ -->
+<section id="s4">
+    <h2 class="rv">Everything you do for me. 🌸</h2>
+    <div class="divider rv"></div>
+    <p class="rv">Even when I was being distant and difficult, <span class="hi">you never stopped showing up for me</span>. I see it all. I notice it all. And I need you to know how deeply I appreciate every single bit of it.</p>
+    <div class="things-grid">
+        <div class="tc rv" onclick="cardClick(this)">
+            <span class="tc-icon">📞</span>
+            <div class="tc-title">You Keep Calling Me</div>
+            <div class="tc-desc">Even when I didn't pick up. Even when I gave you one-word answers. You kept calling — just to hear my voice, just to make sure I was okay. That takes a special kind of love.</div>
+        </div>
+        <div class="tc rv" onclick="cardClick(this)">
+            <span class="tc-icon">🔍</span>
+            <div class="tc-title">You Keep Checking On Me</div>
+            <div class="tc-desc">"Are you okay?", "Did you eat?", "How are you feeling?" — every single message you sent me was a reminder that someone in this world genuinely, deeply cares about me.</div>
+        </div>
+        <div class="tc rv" onclick="cardClick(this)">
+            <span class="tc-icon">🤍</span>
+            <div class="tc-title">You Take Care of Me</div>
+            <div class="tc-desc">The way you look after me — the little things, the big things — nobody has ever taken care of me the way you do. It is the most beautiful, rare thing I have ever experienced.</div>
+        </div>
+        <div class="tc rv" onclick="cardClick(this)">
+            <span class="tc-icon">🌙</span>
+            <div class="tc-title">You Stay Up For Me</div>
+            <div class="tc-desc">Even when you're tired, even when it's late — you stay. You listen. You are present. I see the sacrifice you make, every single time. It does not go unnoticed.</div>
+        </div>
+        <div class="tc rv" onclick="cardClick(this)">
+            <span class="tc-icon">☀️</span>
+            <div class="tc-title">You Make My Day</div>
+            <div class="tc-desc">On my worst days, a single message from you changes everything. Your voice, your laugh, your silly jokes — you are my sunshine even when my sky is cloudy.</div>
+        </div>
+        <div class="tc rv" onclick="cardClick(this)">
+            <span class="tc-icon">💪</span>
+            <div class="tc-title">You Believe In Me</div>
+            <div class="tc-desc">Your belief in me is stronger than my own belief in myself. When I am low, you lift me. You make me feel like I can handle anything. You make me want to be better.</div>
+        </div>
+    </div>
+</section>
 
-        // Navigation between sections
-        function nextSection(currentId) {
-            document.getElementById(`sec${currentId}`).classList.remove('active');
-            document.getElementById(`sec${currentId}`).classList.add('hidden-up');
-            
-            setTimeout(() => {
-                document.getElementById(`sec${currentId + 1}`).classList.remove('hidden-down');
-                document.getElementById(`sec${currentId + 1}`).classList.add('active');
-            }, 500);
-        }
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 5 — LOVE LETTERS
+═══════════════════════════════════════════════════════ -->
+<section id="s5">
+    <h2 class="rv">Letters from my heart 💌</h2>
+    <div class="divider rv"></div>
+    <p class="rv">I wrote these for you. Swipe through each one.</p>
+    <div class="ll-card rv">
+        <div id="l0" class="ls on">
+            <p>Rasmalai, I need you to truly understand something — <span class="hi">I care for you more deeply than I have ever shown</span>. Not because I don't feel it, but because I am foolish enough to sometimes think you already know. I am so sorry for every moment I failed to say it out loud. The love I carry for you is enormous. It is quiet but it is consuming. And I will spend every remaining day making sure you feel it.</p>
+        </div>
+        <div id="l1" class="ls">
+            <p>When I picture my best days — the days I feel most alive — <span class="hi">you are always there</span>. Your laugh. Your voice. The way your eyes light up when you talk about something you love. You are not just someone I love. You are the person I want to build my entire life with. And I am terrified of losing that. I am terrified of losing <em>you</em>.</p>
+        </div>
+        <div id="l2" class="ls">
+            <p>The way you love me — patiently, consistently, without conditions — I <span class="hi">do not deserve it</span>. Not because I am worthless. But because the love you give is so pure and so rare that no one should ever take it for granted. And I did. I took it for granted these past few weeks. That ends now. I am going to earn every single bit of what you give me.</p>
+        </div>
+        <div id="l3" class="ls">
+            <p>You check on me when nobody else would. You call just to hear my voice. You take care of me like I am precious to you. <span class="hi">Do you know how rare that is?</span> Most people in this world never get to experience what you give me. I am the luckiest person alive — and starting today, I will make sure you know exactly how much I mean that.</p>
+        </div>
+        <div id="l4" class="ls">
+            <p>There are nights when I lie awake and I think about how different my life would be without you. How dark it would feel. How empty. <span class="hi">You fill up every corner of my world</span>, Rasmalai. With your warmth, your care, your love. You are not just my girlfriend. You are my home. And I will protect that home with everything I have.</p>
+        </div>
+        <div class="ll-nav">
+            <div class="ll-dot on"  onclick="showL(0)"></div>
+            <div class="ll-dot"     onclick="showL(1)"></div>
+            <div class="ll-dot"     onclick="showL(2)"></div>
+            <div class="ll-dot"     onclick="showL(3)"></div>
+            <div class="ll-dot"     onclick="showL(4)"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:18px">
+            <button class="ll-btn" onclick="prevL()">← Prev</button>
+            <button class="ll-btn" onclick="nextL()">Next →</button>
+        </div>
+    </div>
+</section>
 
-        // Sorry Slider Interaction
-        function updateSorry() {
-            const slider = document.getElementById('sorrySlider');
-            const valueDisplay = document.getElementById('sorry-value');
-            const btn = document.getElementById('btn-sec2');
-            
-            if(slider.value == 100) {
-                valueDisplay.innerText = "Infinity & Beyond! 🚀";
-                btn.style.display = 'inline-block';
-            } else {
-                valueDisplay.innerText = slider.value + "%";
-                btn.style.display = 'none';
-            }
-        }
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 6 — REASONS I LOVE YOU
+═══════════════════════════════════════════════════════ -->
+<section id="s6">
+    <h2 class="rv">Reasons I love you 💖</h2>
+    <div class="divider rv"></div>
+    <p class="rv">Tap each one — these are not lines. These are truths I carry inside me every single day.</p>
+    <div class="reasons-wrap" id="rw">
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">01</span><span class="ri-t">Because you check on me <span class="hi">every single day</span> without fail — making me feel like I actually matter to someone in this world.</span></div>
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">02</span><span class="ri-t">Because the way you laugh is genuinely the <span class="hi">most beautiful sound</span> I have ever heard, and I would do anything to keep hearing it forever.</span></div>
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">03</span><span class="ri-t">Because you <span class="hi">never gave up on me</span> — not during these past weeks, not even when I gave you every reason to walk away.</span></div>
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">04</span><span class="ri-t">Because the warmth and care you bring — <span class="hi">the way you take care of me</span> — is something I have never experienced with anyone else. Ever.</span></div>
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">05</span><span class="ri-t">Because you <span class="hi">believe in me harder than I believe in myself</span>, and that pushes me to be a better person every single day.</span></div>
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">06</span><span class="ri-t">Because your voice alone — <span class="hi">just one call from you</span> — has the power to make everything in my world okay again.</span></div>
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">07</span><span class="ri-t">Because you are <span class="hi">patient, kind, and gentle</span> even when I absolutely do not deserve it. That is not normal. That is something truly rare.</span></div>
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">08</span><span class="ri-t">Because when I picture my <span class="hi">happiest future</span>, you are always in it. Every single version of it. Always.</span></div>
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">09</span><span class="ri-t">Because you are not just my girlfriend. You are my <span class="hi">safe place, my home, my person</span> — my favorite human being on this entire earth.</span></div>
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">10</span><span class="ri-t">Because <span class="hi">losing you would be the worst thing</span> I could ever imagine — and that alone tells me everything I need to know about how much I love you.</span></div>
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">11</span><span class="ri-t">Because you are the first person I want to talk to when something good happens, and <span class="hi">the only person I want beside me</span> when something goes wrong.</span></div>
+        <div class="ri" onclick="riClick(this)"><span class="ri-n">12</span><span class="ri-t">Because <span class="hi">loving you is the easiest thing</span> I have ever done — it requires no effort, no thought. It just happens naturally, every moment, every day.</span></div>
+    </div>
+</section>
 
-        // Cards Interaction
-        let cardsRevealed = 0;
-        function revealCard(card) {
-            if(!card.classList.contains('revealed')) {
-                card.classList.add('revealed');
-                cardsRevealed++;
-                
-                if(cardsRevealed === 3) {
-                    setTimeout(() => {
-                        document.getElementById('btn-sec3').style.display = 'inline-block';
-                    }, 800);
-                }
-            }
-        }
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 7 — PROMISES
+═══════════════════════════════════════════════════════ -->
+<section id="s7">
+    <h2 class="rv">My promises to you. 🌟</h2>
+    <div class="divider rv"></div>
+    <p class="rv">Tap each promise to lock it in. These are not just words — this is my commitment to you from this day forward.</p>
+    <ul class="pl-wrap">
+        <li class="pi rv" onclick="toggleP(this)"><div class="pchk">✓</div><span class="pt">I promise to communicate openly with you — no more shutting down, no more silence when something is bothering me. You deserve to know what is going on with me.</span></li>
+        <li class="pi rv" onclick="toggleP(this)"><div class="pchk">✓</div><span class="pt">I promise to match your energy. If you check on me every day, I will check on you every day. If you call, I will answer or call right back. Always.</span></li>
+        <li class="pi rv" onclick="toggleP(this)"><div class="pchk">✓</div><span class="pt">I promise to tell you — out loud, every day — how important you are to me, how much I appreciate you, and how lucky I am to have you.</span></li>
+        <li class="pi rv" onclick="toggleP(this)"><div class="pchk">✓</div><span class="pt">I promise to never let you feel unappreciated or unseen. Every call, every check-in, every act of care — I will acknowledge and cherish all of it.</span></li>
+        <li class="pi rv" onclick="toggleP(this)"><div class="pchk">✓</div><span class="pt">I promise that this odd behavior — this distance — is done. I will show up for you the same beautiful way you have always shown up for me.</span></li>
+        <li class="pi rv" onclick="toggleP(this)"><div class="pchk">✓</div><span class="pt">I promise to make you feel as loved, valued, and safe as you truly deserve — every single day, for as long as you will have me.</span></li>
+    </ul>
+</section>
 
-        // Typewriter Effect
-        const message = "I do care for you deeply. I want you to know exactly how much you are important to me. My life is so much brighter with you in it, and I don't ever want to lose that.";
-        let charIndex = 0;
-        function startTypewriter() {
-            if(charIndex === 0) {
-                typeChar();
-            }
-        }
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 8 — HEART TAP
+═══════════════════════════════════════════════════════ -->
+<section id="s8">
+    <h2 class="rv">Tap this heart. 💖</h2>
+    <div class="divider rv"></div>
+    <p class="rv">Every tap sends love from me to you. There is no limit — just like my love for you.</p>
+    <span class="big-heart rv" id="bigH" onclick="tapHeart()">❤️</span>
+    <div class="love-counter rv" id="lc">I love you this much: <span id="cnt">0</span></div>
+    <p class="heart-msg rv" id="hm">Go ahead, tap it... 😊</p>
+</section>
 
-        function typeChar() {
-            if (charIndex < message.length) {
-                document.getElementById('typewriter-text').innerHTML += message.charAt(charIndex);
-                charIndex++;
-                setTimeout(typeChar, 40);
-            } else {
-                setTimeout(() => {
-                    document.getElementById('btn-sec4').style.display = 'inline-block';
-                }, 500);
-            }
-        }
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 9 — FORGIVENESS
+═══════════════════════════════════════════════════════ -->
+<section id="s9">
+    <h2 class="rv">Please forgive me? 🥺</h2>
+    <div class="divider rv"></div>
+    <p class="rv">I know I don't deserve to ask. But I am asking anyway — because you mean <span class="hi">everything</span> to me. Slide to let me know where your heart is right now...</p>
+    <div class="forg-card rv">
+        <span class="forg-emoji" id="femoji">😔</span>
+        <div class="forg-lbl" id="flbl">I know I hurt you...</div>
+        <input type="range" class="fr" min="0" max="100" value="0" oninput="doForg(this.value)" id="forgSlider">
+        <div class="forg-resp" id="fresp">Take all the time you need. Your feelings matter more than anything. I am not going anywhere. 💜</div>
+    </div>
+    <div style="margin-top:28px;width:100%;max-width:480px;background:var(--card-bg);border:1px solid rgba(212,165,255,.2);border-radius:16px;padding:22px;" class="rv">
+        <p style="margin:0;font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--lavender)">Are you ready to forgive me? 🥺</p>
+        <div class="dec-wrap">
+            <button class="btn-yes" onclick="onYes()">Yes 💚</button>
+            <button class="btn-no" id="btnNo" onmouseover="runAway()" ontouchstart="runAway()">Not yet 😤</button>
+        </div>
+    </div>
+    <p style="margin-top:35px;font-size:.8rem;color:rgba(255,255,255,.28);font-style:italic">*(The "Not yet" button has trust issues 😅)</p>
+</section>
 
-        // Runaway Button
-        const runawayBtn = document.getElementById('runawayBtn');
-        function runAway() {
-            const container = document.querySelector('.decision-buttons');
-            const maxX = container.offsetWidth - runawayBtn.offsetWidth + 100;
-            const maxY = 200;
-            
-            const randomX = Math.floor(Math.random() * maxX) - (maxX/2);
-            const randomY = Math.floor(Math.random() * maxY) - (maxY/2);
-            
-            runawayBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
-        }
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 10 — FINAL
+═══════════════════════════════════════════════════════ -->
+<section id="s10">
+    <span class="fin-heart rv">💖</span>
+    <h1 class="rv" style="transition-delay:.2s">Thank you, my Rasmalai! 🎉</h1>
+    <div class="divider rv" style="transition-delay:.3s"></div>
+    <p class="rv" style="transition-delay:.4s">You have no idea how incredibly happy you just made me. You are the most kind, forgiving, loving person I have ever known — and I am going to spend every day being worthy of this second chance.</p>
+    <p class="rv" style="transition-delay:.55s;font-style:italic;color:var(--lavender);font-size:clamp(1rem,2.8vw,1.2rem)">
+        "You are not just important to me, Rasmalai. <br>You are <strong>everything</strong> to me. Every day I wake up grateful that you chose me."
+    </p>
+    <p class="rv" style="transition-delay:.7s;font-size:clamp(1rem,2.8vw,1.15rem);color:rgba(255,255,255,.8)">
+        I will check on you. I will call you. I will take care of you.<br>
+        <span class="hi">The way you have always done for me</span> — I will do it back, every single day.
+    </p>
+    <div class="sig rv" style="transition-delay:.85s">With all my love, forever & always 💜<br>— Yours, always ❤️</div>
+    <span style="font-size:3.5rem;margin-top:28px;display:block;animation:hb 1.1s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(255,107,157,.7));" class="rv" style="transition-delay:1s">💖</span>
+</section>
 
-        // Final Celebration
-        function showFinal() {
-            nextSection(5);
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.className = 'heart-fall';
-                const icons = ['💖', '💕', '✨', '🌸', '🥺'];
-                heart.innerText = icons[Math.floor(Math.random() * icons.length)];
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-                document.body.appendChild(heart);
-                
-                setTimeout(() => heart.remove(), 5000);
-            }, 100);
+
+<script>
+/* ─────────────── CANVAS PARTICLES ─────────────── */
+const canvas = document.getElementById('bgCanvas');
+const ctx2 = canvas.getContext('2d');
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const ICONS = ['💜','💗','✨','🌸','⭐','💕','🤍'];
+class Pt {
+    constructor(rand_y = false) {
+        this.x = Math.random() * canvas.width;
+        this.y = rand_y ? Math.random() * canvas.height : -20;
+        this.s = Math.random() * 14 + 9;
+        this.sp = Math.random() * .7 + .25;
+        this.sw = Math.random() * 1.2 - .6;
+        this.a = Math.random() * Math.PI * 2;
+        this.ic = ICONS[Math.floor(Math.random() * ICONS.length)];
+        this.op = Math.random() * .22 + .06;
+    }
+    update() {
+        this.y += this.sp; this.x += Math.sin(this.a) * this.sw; this.a += .018;
+        if (this.y > canvas.height + 20) { this.y = -20; this.x = Math.random() * canvas.width; }
+    }
+    draw() {
+        ctx2.save(); ctx2.globalAlpha = this.op; ctx2.font = this.s + 'px serif';
+        ctx2.fillText(this.ic, this.x, this.y); ctx2.restore();
+    }
+}
+const pts = Array.from({length: 40}, (_,i) => new Pt(i < 20));
+(function loop() { ctx2.clearRect(0,0,canvas.width,canvas.height); pts.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); })();
+
+/* ─────────────── CURSOR ─────────────── */
+const cur = document.getElementById('cur');
+document.addEventListener('mousemove', e => {
+    cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px';
+    spawnTrail(e.clientX, e.clientY);
+});
+let lastTrail = 0;
+function spawnTrail(x, y) {
+    const now = Date.now();
+    if (now - lastTrail < 60) return;
+    lastTrail = now;
+    const t = document.createElement('div');
+    t.style.cssText = `position:fixed;left:${x}px;top:${y}px;font-size:${Math.random()*8+8}px;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);opacity:.7;transition:all .8s ease;`;
+    t.textContent = ICONS[Math.floor(Math.random() * ICONS.length)];
+    document.body.appendChild(t);
+    requestAnimationFrame(() => { t.style.opacity = '0'; t.style.transform = 'translate(-50%,-200%) scale(0)'; });
+    setTimeout(() => t.remove(), 850);
+}
+
+/* ─────────────── NAV DOTS ─────────────── */
+const SIDS = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10'];
+const navEl = document.getElementById('navDots');
+SIDS.forEach((id, i) => {
+    const d = document.createElement('div'); d.className = 'ndot';
+    d.onclick = () => document.getElementById(id).scrollIntoView({behavior:'smooth'});
+    navEl.appendChild(d);
+});
+const ndots = navEl.querySelectorAll('.ndot');
+const secEls = SIDS.map(id => document.getElementById(id));
+
+/* ─────────────── SCROLL ─────────────── */
+const pb = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    pb.style.width = (window.scrollY / total * 100) + '%';
+    const mid = window.scrollY + window.innerHeight / 2;
+    secEls.forEach((el, i) => {
+        if (!el) return;
+        if (mid >= el.offsetTop && mid < el.offsetTop + el.offsetHeight) {
+            ndots.forEach(d => d.classList.remove('on'));
+            if (ndots[i]) ndots[i].classList.add('on');
         }
-    </script>
+    });
+});
+ndots[0].classList.add('on');
+
+/* Intersection Observer for reveals */
+const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+}, {threshold: .1});
+document.querySelectorAll('.rv,.rvl,.rvr').forEach(el => ro.observe(el));
+
+/* Reason items observer */
+const riEls = document.querySelectorAll('.ri');
+const riObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            riEls.forEach((el, i) => setTimeout(() => el.classList.add('show'), i * 100));
+            riObs.disconnect();
+        }
+    });
+}, {threshold: .05});
+if (riEls[0]) riObs.observe(riEls[0]);
+
+/* ─────────────── TYPEWRITER (S3) ─────────────── */
+const twMsg = "I do care for you, Rasmalai. More than I have ever shown. I know these past few weeks have been confusing — but I need you to know that it was never about loving you any less. You are important to me. Irreplaceable. The single most valuable person in my life. And I am going to make absolutely sure you feel that every single day from now on.";
+let twIdx = 0, twStarted = false;
+const twObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting && !twStarted) { twStarted = true; typeChar(); twObs.disconnect(); }
+    });
+}, {threshold: .3});
+twObs.observe(document.getElementById('s3'));
+function typeChar() {
+    if (twIdx < twMsg.length) {
+        document.getElementById('tw-text').textContent += twMsg[twIdx++];
+        setTimeout(typeChar, 38);
+    } else {
+        document.getElementById('tw-text').style.borderRight = 'none';
+    }
+}
+
+/* ─────────────── SORRY METER ─────────────── */
+const sData = [
+    [0,10,'Move the slider...',''],
+    [11,30,'A little sorry... 😕','#ff9ff3'],
+    [31,50,'Getting more sorry... 😞','#ff6b9d'],
+    [51,70,'Very, very sorry... 😢','#d4a5ff'],
+    [71,90,'Incredibly sorry... 💔','#ffd700'],
+    [91,99,'Beyond words, beyond measure... 💜','#ffd700'],
+    [100,100,'∞ Sorry. More than you can imagine. 🙏💜','#ffd700']
+];
+function doSorry(v) {
+    v = parseInt(v);
+    document.getElementById('sf').style.width = v + '%';
+    const row = sData.find(([a,b]) => v>=a && v<=b);
+    if (row) { document.getElementById('srr').textContent = row[2]; document.getElementById('srr').style.color = row[3] || 'white'; }
+    if (v > 60) burst(window.innerWidth/2, window.innerHeight/2, 4);
+}
+
+/* ─────────────── CARD CLICK ─────────────── */
+function cardClick(card) {
+    card.style.borderColor = 'var(--lavender)';
+    card.style.background = 'rgba(212,165,255,.07)';
+    const r = card.getBoundingClientRect();
+    burst(r.left + r.width/2, r.top + 40, 6);
+}
+
+/* ─────────────── LOVE LETTERS ─────────────── */
+let curL = 0, totalL = 5;
+function showL(n) {
+    document.querySelectorAll('.ls').forEach((el,i) => el.classList.toggle('on', i===n));
+    document.querySelectorAll('.ll-dot').forEach((d,i) => d.classList.toggle('on', i===n));
+    curL = n;
+}
+function nextL() { showL((curL+1) % totalL); }
+function prevL() { showL((curL-1+totalL) % totalL); }
+
+/* ─────────────── REASONS ─────────────── */
+function riClick(el) {
+    el.style.borderLeftColor = 'var(--lavender)';
+    el.style.background = 'rgba(212,165,255,.07)';
+    const r = el.getBoundingClientRect();
+    burst(r.left + r.width/2, r.top + r.height/2, 5);
+}
+
+/* ─────────────── PROMISES ─────────────── */
+function toggleP(el) {
+    el.classList.toggle('ck');
+    if (el.classList.contains('ck')) { const r = el.getBoundingClientRect(); burst(r.left+13, r.top+13, 5); }
+}
+
+/* ─────────────── HEART TAP ─────────────── */
+let tapN = 0;
+const heartMsgs = ["Go ahead, tap it... 😊","A little more... 💜","Keep going! 💕","You're so sweet 😍","I love you MORE! 💖","Awww 🥺💜","You're melting my heart 💗","I will never stop loving you... 💜","FOREVER AND EVER! 🥰❤️","My heart belongs to you. 💝","You are my everything. 🌸","Infinity and beyond! ∞💕","Still going? I love it 😭💜","You are genuinely the best 🥹","THIS IS MY LOVE FOR YOU — ENDLESS! 💖"];
+function tapHeart() {
+    tapN++;
+    document.getElementById('cnt').textContent = tapN;
+    document.getElementById('hm').textContent = heartMsgs[Math.min(tapN-1, heartMsgs.length-1)];
+    const h = document.getElementById('bigH');
+    h.style.transform = 'scale(.78)'; setTimeout(()=>h.style.transform='scale(1)',150);
+    const r = h.getBoundingClientRect();
+    burst(r.left + r.width/2, r.top + r.height/2, 9);
+}
+
+/* ─────────────── FORGIVENESS SLIDER ─────────────── */
+const forgData = [
+    [0,15,'😡','Still very upset...','I completely understand. You have every right to feel this way. Take all the time you need. I am not going anywhere. 💜'],
+    [16,30,'😞','Still really hurt...','Your pain is valid and I respect it. I am not rushing you. I just want you to know I am here, and I love you. 🤍'],
+    [31,50,'😐','Still thinking...','Take your time, my love. I am grateful you are even reading this. That alone means the world to me. 💜'],
+    [51,70,'🥺','Getting there...','My heart is lifting just a little. I promise you — I will earn back every bit of your trust. 💗'],
+    [71,90,'🙂','Almost ready to forgive...','You are the most forgiving, most loving person I know. I love you so much for this. I will never let you down again. 💖'],
+    [91,99,'😊','So close...','I can feel your heart opening. Mine is so full right now. Full of love for you. Thank you, Rasmalai. 💜🥹'],
+    [100,100,'🥰','You forgave me!! 🎉','I LOVE YOU SO MUCH RASMALAI!! You have NO IDEA how happy you just made me!! I promise to be EVERYTHING you deserve! 💖💖🎊✨']
+];
+function doForg(v) {
+    v = parseInt(v);
+    const row = forgData.find(([a,b])=>v>=a&&v<=b);
+    if (!row) return;
+    document.getElementById('femoji').textContent = row[2];
+    document.getElementById('flbl').textContent   = row[3];
+    document.getElementById('fresp').textContent  = row[4];
+    if (v===100) for(let i=0;i<6;i++) setTimeout(()=>burst(Math.random()*window.innerWidth,Math.random()*window.innerHeight,10),i*200);
+}
+
+/* ─────────────── RUN-AWAY BUTTON ─────────────── */
+let runN = 0;
+const btnNo = document.getElementById('btnNo');
+function runAway() {
+    runN++;
+    const wrap = btnNo.closest('.dec-wrap');
+    const mx = wrap.offsetWidth - btnNo.offsetWidth;
+    const rx = (Math.random() * (mx+120)) - 60;
+    const ry = (Math.random() * 180) - 90;
+    btnNo.style.transform = `translate(${rx}px,${ry}px)`;
+    if (runN >= 3) btnNo.textContent = "I said NO! 😤";
+    if (runN >= 6) { btnNo.style.opacity='0'; btnNo.style.pointerEvents='none'; }
+}
+btnNo.addEventListener('touchstart', e => { e.preventDefault(); runAway(); });
+
+/* ─────────────── YES BUTTON ─────────────── */
+function onYes() {
+    for(let i=0;i<10;i++) setTimeout(()=>burst(Math.random()*window.innerWidth,Math.random()*window.innerHeight,14),i*140);
+    const s10 = document.getElementById('s10');
+    s10.style.display = 'flex';
+    setTimeout(() => {
+        s10.scrollIntoView({behavior:'smooth'});
+        s10.querySelectorAll('.rv').forEach((el,i) => setTimeout(()=>el.classList.add('show'), i*180+300));
+    }, 300);
+}
+
+/* ─────────────── BURST ─────────────── */
+function burst(x, y, n=8) {
+    for(let i=0;i<n;i++) {
+        const el = document.createElement('span');
+        el.className = 'bst';
+        el.textContent = ICONS[Math.floor(Math.random()*ICONS.length)];
+        el.style.left = x+'px'; el.style.top = y+'px';
+        el.style.fontSize = (Math.random()*12+10)+'px';
+        document.body.appendChild(el);
+        const dx = (Math.random()-.5)*140, dy = (Math.random()-.85)*140;
+        requestAnimationFrame(()=>{
+            el.style.transform=`translate(${dx}px,${dy}px) scale(0)`;
+            el.style.opacity='0';
+        });
+        setTimeout(()=>el.remove(), 1150);
+    }
+}
+
+/* click anywhere = mini burst */
+document.addEventListener('click', e=>{
+    if(!e.target.closest('button,input,.ll-btn,.ll-dot,.ndot,.tc,.pi,.ri,.big-heart')) burst(e.clientX,e.clientY,4);
+});
+document.addEventListener('touchstart', e=>{
+    const t=e.touches[0]; burst(t.clientX,t.clientY,4);
+}, {passive:true});
+
+/* Helper */
+function gotoSection(id) { document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+
+/* Init */
+setTimeout(()=>document.querySelectorAll('#s1 .rv').forEach(el=>el.classList.add('show')),200);
+</script>
 </body>
 </html>
