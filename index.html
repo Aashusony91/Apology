@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Rasmalai ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Falling Hearts */
+        .heart-particle {
+            position: absolute;
+            top: -10vh;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            animation: fall linear forwards;
+            z-index: 1;
+            user-select: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        /* Container */
+        .container {
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        /* Envelope */
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin: 0 auto 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #d4a5ff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #b784e6;
+            z-index: 3;
+            transform-origin: top;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .envelope::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-left: 150px solid #c895f5;
+            border-right: 150px solid #c895f5;
+            border-bottom: 100px solid #b784e6;
+            z-index: 2;
+        }
+
+        .envelope.open::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .click-me {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 4;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            pointer-events: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Letter */
+        .letter {
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            background: #fff9f9;
+            border-radius: 8px;
+            z-index: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.8s ease-in-out, height 0.8s ease-in-out;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .envelope.open .letter {
+            transform: translateY(-150px);
+            height: 400px;
+            z-index: 4;
+        }
+
+        .letter-content {
+            opacity: 0;
+            transition: opacity 0.5s ease 0.5s;
+            font-size: 0.95rem;
+            color: #4a4a4a;
+            line-height: 1.6;
+            text-align: left;
+            max-height: 100%;
+            overflow-y: auto;
+        }
+
+        .letter-content::-webkit-scrollbar {
+            width: 5px;
+        }
+        .letter-content::-webkit-scrollbar-thumb {
+            background: #d4a5ff;
+            border-radius: 5px;
+        }
+
+        .envelope.open .letter-content {
+            opacity: 1;
+        }
+
+        .salutation {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #8e44ad;
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            color: #8e44ad;
+            font-weight: 600;
+        }
+
+        /* Interactive Section */
+        .interaction {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease 1s;
+            margin-top: 250px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .envelope.open ~ .interaction {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .question {
+            font-size: 1.2rem;
+            color: #4a235a;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 50px;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .btn-yes {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .btn-yes:hover {
+            background: #8e44ad;
+            transform: scale(1.1);
+        }
+
+        .btn-no {
+            background: #f1f2f6;
+            color: #747d8c;
+            position: absolute;
+            left: calc(50% + 10px);
+        }
+
+        .btn-yes {
+            position: absolute;
+            right: calc(50% + 10px);
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(142, 68, 173, 0.9);
+            z-index: 100;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-message h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .success-message p {
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 80%;
+        }
+        
+        .big-heart {
+            font-size: 5rem;
+            color: #ff6b81;
+            animation: beat 1s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes beat {
+            to { transform: scale(1.2); }
+        }
+
+        @media (max-width: 400px) {
+            .envelope-wrapper { width: 250px; height: 160px; }
+            .envelope.open .letter { height: 350px; transform: translateY(-120px); }
+            .salutation { font-size: 1.5rem; }
+            .interaction { margin-top: 220px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container for falling hearts -->
+    <div id="particles"></div>
+
+    <div class="container">
+        <!-- Interactive Envelope -->
+        <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
+            <div class="envelope">
+                <div class="click-me" id="clickText">Tap to Open</div>
+                <div class="letter">
+                    <div class="letter-content">
+                        <div class="salutation">My dearest Rasmalai ❤️,</div>
+                        <p>I am making this to sincerely apologize for my odd behavior over these last few weeks. I know I haven't been myself, and I'm so sorry if I made you feel confused or unappreciated.</p>
+                        <p>I notice all the little things you do. The way you <span class="highlight">keep checking on me</span>, how you always make time to <span class="highlight">call me</span>, and how beautifully you <span class="highlight">take care of me</span>. You do so much, and it never goes unnoticed.</p>
+                        <p>I want you to know how deeply I care for you. You are incredibly important to me, and you mean the world to me. I promise to do better because you deserve the best.</p>
+                        <p>Yours always,</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Question -->
+        <div class="interaction">
+            <div class="question">Can you forgive me? 🥺</div>
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="showSuccess()">Yes</button>
+                <button class="btn btn-no" id="btnNo" onmouseover="moveNoBtn()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div class="success-message" id="successScreen">
+        <div class="big-heart">💖</div>
+        <h1>Thank you, my Rasmalai!</h1>
+        <p>I promise to make you smile every day. I love you! 💕</p>
+    </div>
+
+    <script>
+        // Falling Hearts Particle Effect
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            
+            // Randomize heart properties
+            const hearts = ['🤍', '💜', '✨', '🌸'];
+            heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's'; // 4s to 7s
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            heart.style.fontSize = Math.random() * 10 + 15 + 'px'; // 15px to 25px
+
+            document.body.appendChild(heart);
+
+            // Remove heart after it falls
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        // Generate hearts periodically
+        setInterval(createHeart, 300);
+
+        // Envelope Interaction
+        let isOpen = false;
+        function openEnvelope() {
+            const env = document.getElementById('envelope');
+            const clickText = document.getElementById('clickText');
+            if (!isOpen) {
+                env.querySelector('.envelope').classList.add('open');
+                clickText.style.display = 'none';
+                isOpen = true;
+                
+                // Add more hearts when opened
+                for(let i=0; i<15; i++) {
+                    setTimeout(createHeart, i*100);
+                }
+            }
+        }
+
+        // Playful "No" Button (Moves away when hovered or tapped)
+        const btnNo = document.getElementById('btnNo');
+        
+        function moveNoBtn() {
+            const interactionDiv = document.querySelector('.interaction');
+            const rect = interactionDiv.getBoundingClientRect();
+            
+            // Calculate random positions within the interaction div boundaries
+            // keeping a safe margin from the edges
+            const maxX = rect.width - btnNo.offsetWidth - 20;
+            const maxY = 100; // Allow it to move up and down a bit
+            
+            const randomX = Math.floor(Math.random() * (maxX - (-maxX) + 1)) + (-maxX/2);
+            const randomY = Math.floor(Math.random() * (maxY - (-maxY) + 1)) + (-maxY);
+
+            btnNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        // For mobile touch
+        btnNo.addEventListener('touchstart', function(e) {
+            e.preventDefault(); // Prevent click
+            moveNoBtn();
+        });
+
+        // Success Screen
+        function showSuccess() {
+            const successScreen = document.getElementById('successScreen');
+            successScreen.style.display = 'flex';
+            
+            // Burst of hearts
+            for(let i=0; i<50; i++) {
+                setTimeout(createHeart, i*50);
+            }
+        }
+    </script>
+</body>
+</html>
