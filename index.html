@@ -3,420 +3,466 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Rasmalai ❤️</title>
+    <title>For Rasmalai ❤️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap');
 
-        body {
+        * {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Falling Hearts */
-        .heart-particle {
-            position: absolute;
-            top: -10vh;
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.7);
-            animation: fall linear forwards;
-            z-index: 1;
-            user-select: none;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(110vh) rotate(360deg);
-            }
-        }
-
-        /* Container */
-        .container {
-            z-index: 10;
-            text-align: center;
-            padding: 20px;
-            max-width: 600px;
-            width: 90%;
-        }
-
-        /* Envelope */
-        .envelope-wrapper {
-            position: relative;
-            width: 300px;
-            height: 200px;
-            margin: 0 auto 40px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .envelope-wrapper:hover {
-            transform: scale(1.05);
-        }
-
-        .envelope {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: #d4a5ff;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .envelope::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 150px solid transparent;
-            border-right: 150px solid transparent;
-            border-top: 100px solid #b784e6;
-            z-index: 3;
-            transform-origin: top;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .envelope::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            border-left: 150px solid #c895f5;
-            border-right: 150px solid #c895f5;
-            border-bottom: 100px solid #b784e6;
-            z-index: 2;
-        }
-
-        .envelope.open::before {
-            transform: rotateX(180deg);
-            z-index: 1;
-        }
-
-        .click-me {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 4;
-            color: white;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
-            pointer-events: none;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-            100% { transform: translate(-50%, -50%) scale(1); }
-        }
-
-        /* Letter */
-        .letter {
-            position: absolute;
-            bottom: 0;
-            left: 5%;
-            width: 90%;
-            height: 90%;
-            background: #fff9f9;
-            border-radius: 8px;
-            z-index: 1;
-            padding: 20px;
             box-sizing: border-box;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.8s ease-in-out, height 0.8s ease-in-out;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
-        .envelope.open .letter {
-            transform: translateY(-150px);
-            height: 400px;
-            z-index: 4;
-        }
-
-        .letter-content {
-            opacity: 0;
-            transition: opacity 0.5s ease 0.5s;
-            font-size: 0.95rem;
-            color: #4a4a4a;
-            line-height: 1.6;
-            text-align: left;
-            max-height: 100%;
-            overflow-y: auto;
-        }
-
-        .letter-content::-webkit-scrollbar {
-            width: 5px;
-        }
-        .letter-content::-webkit-scrollbar-thumb {
-            background: #d4a5ff;
-            border-radius: 5px;
-        }
-
-        .envelope.open .letter-content {
-            opacity: 1;
-        }
-
-        .salutation {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
-            color: #8e44ad;
-            margin-bottom: 15px;
-        }
-
-        .highlight {
-            color: #8e44ad;
-            font-weight: 600;
-        }
-
-        /* Interactive Section */
-        .interaction {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1s ease 1s;
-            margin-top: 250px;
-            background: rgba(255, 255, 255, 0.3);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-        }
-
-        .envelope.open ~ .interaction {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .question {
-            font-size: 1.2rem;
-            color: #4a235a;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            position: relative;
-            height: 50px;
-        }
-
-        .btn {
-            padding: 10px 25px;
-            border: none;
-            border-radius: 25px;
+        body {
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s, background 0.3s;
-        }
-
-        .btn-yes {
-            background: #9b59b6;
+            background: #1a0b2e; /* Deep dreamy purple */
             color: white;
+            overflow-x: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
         }
 
-        .btn-yes:hover {
-            background: #8e44ad;
-            transform: scale(1.1);
-        }
-
-        .btn-no {
-            background: #f1f2f6;
-            color: #747d8c;
-            position: absolute;
-            left: calc(50% + 10px);
-        }
-
-        .btn-yes {
-            position: absolute;
-            right: calc(50% + 10px);
-        }
-
-        /* Success Message */
-        .success-message {
-            display: none;
+        /* Moving Stars Background */
+        .stars {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(142, 68, 173, 0.9);
-            z-index: 100;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Sections Setup */
+        .section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: white;
-            animation: fadeIn 0.5s ease;
+            padding: 20px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease, transform 1s ease;
+            z-index: 10;
+            background: radial-gradient(circle at center, rgba(74, 20, 140, 0.4) 0%, #1a0b2e 100%);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .section.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: scale(1);
         }
 
-        .success-message h1 {
+        .section.hidden-up {
+            transform: translateY(-50px) scale(0.95);
+        }
+
+        .section.hidden-down {
+            transform: translateY(50px) scale(0.95);
+        }
+
+        h1, h2 {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .success-message p {
-            font-size: 1.2rem;
-            text-align: center;
-            max-width: 80%;
-        }
-        
-        .big-heart {
-            font-size: 5rem;
-            color: #ff6b81;
-            animation: beat 1s infinite alternate;
             margin-bottom: 20px;
         }
 
-        @keyframes beat {
-            to { transform: scale(1.2); }
+        h1 { font-size: 3.5rem; color: #e0b0ff; text-shadow: 0 0 15px rgba(224, 176, 255, 0.5); }
+        h2 { font-size: 2.5rem; color: #ffb7b2; }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin-bottom: 20px;
+            color: #dcdde1;
         }
 
-        @media (max-width: 400px) {
-            .envelope-wrapper { width: 250px; height: 160px; }
-            .envelope.open .letter { height: 350px; transform: translateY(-120px); }
-            .salutation { font-size: 1.5rem; }
-            .interaction { margin-top: 220px; }
+        .highlight {
+            color: #ff9ff3;
+            font-weight: 600;
         }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            background: linear-gradient(45deg, #9b59b6, #e056fd);
+            color: white;
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(155, 89, 182, 0.6);
+        }
+
+        /* Interactive Slider (Sorry Meter) */
+        .slider-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 30px 0;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            background: #ff9ff3;
+            cursor: pointer;
+            margin-top: -12px;
+            box-shadow: 0 0 10px #ff9ff3;
+        }
+        
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #4a235a;
+            border-radius: 3px;
+        }
+
+        #sorry-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff9ff3;
+            margin-top: 10px;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Interactive Cards (Appreciation) */
+        .cards-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(224, 176, 255, 0.2);
+            border-radius: 15px;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(224, 176, 255, 0.2);
+            background: rgba(224, 176, 255, 0.1);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            transition: opacity 0.3s;
+        }
+
+        .card-text {
+            position: absolute;
+            opacity: 0;
+            font-size: 0.9rem;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+            transform: scale(0.8);
+            transition: all 0.3s;
+        }
+
+        .card.revealed .card-icon {
+            opacity: 0;
+        }
+
+        .card.revealed .card-text {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Typewriter text */
+        .typewriter-container {
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+        }
+        
+        #typewriter-text {
+            font-size: 1.3rem;
+            color: #e0b0ff;
+            border-right: 2px solid #e0b0ff;
+            padding-right: 5px;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        /* Runaway Button */
+        .decision-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+            height: 60px;
+            width: 300px;
+            justify-content: center;
+        }
+
+        .btn-yes {
+            background: #2ecc71;
+            z-index: 2;
+        }
+
+        .btn-no {
+            background: #e74c3c;
+            position: absolute;
+            z-index: 1;
+        }
+
+        /* Final Celebration */
+        .heart-fall {
+            position: fixed;
+            top: -10%;
+            font-size: 2rem;
+            animation: fall linear forwards;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .card { width: 130px; height: 130px; }
+            .card-icon { font-size: 2rem; }
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- Container for falling hearts -->
-    <div id="particles"></div>
+    <div class="stars" id="stars-container"></div>
 
-    <div class="container">
-        <!-- Interactive Envelope -->
-        <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
-            <div class="envelope">
-                <div class="click-me" id="clickText">Tap to Open</div>
-                <div class="letter">
-                    <div class="letter-content">
-                        <div class="salutation">My dearest Rasmalai ❤️,</div>
-                        <p>I am making this to sincerely apologize for my odd behavior over these last few weeks. I know I haven't been myself, and I'm so sorry if I made you feel confused or unappreciated.</p>
-                        <p>I notice all the little things you do. The way you <span class="highlight">keep checking on me</span>, how you always make time to <span class="highlight">call me</span>, and how beautifully you <span class="highlight">take care of me</span>. You do so much, and it never goes unnoticed.</p>
-                        <p>I want you to know how deeply I care for you. You are incredibly important to me, and you mean the world to me. I promise to do better because you deserve the best.</p>
-                        <p>Yours always,</p>
-                    </div>
-                </div>
+    <!-- Section 1: Intro -->
+    <div class="section active" id="sec1">
+        <h1>Hi Rasmalai... ❤️</h1>
+        <p>I built this little place just for you, because you deserve more than just a regular text message.</p>
+        <button class="btn" onclick="nextSection(1)">See What's Inside ✨</button>
+    </div>
+
+    <!-- Section 2: The Apology -->
+    <div class="section hidden-down" id="sec2">
+        <h2>I am truly sorry.</h2>
+        <p>I want to deeply apologize for my odd behavior over these last few weeks. I know I haven't been myself, and I hate knowing that I might have made you feel confused or unloved.</p>
+        
+        <div class="slider-container">
+            <p>How sorry am I?</p>
+            <input type="range" min="0" max="100" value="0" id="sorrySlider" oninput="updateSorry()">
+            <div id="sorry-value">0%</div>
+        </div>
+        
+        <button class="btn" id="btn-sec2" style="display:none;" onclick="nextSection(2)">There's more... ➔</button>
+    </div>
+
+    <!-- Section 3: Appreciation -->
+    <div class="section hidden-down" id="sec3">
+        <h2>I notice everything you do.</h2>
+        <p>Even when I am being difficult, you never stop caring. Tap these to see what I mean:</p>
+        
+        <div class="cards-container">
+            <div class="card" onclick="revealCard(this)">
+                <div class="card-icon">👀</div>
+                <div class="card-text">How you always <span class="highlight">keep checking on me</span> to see if I'm okay.</div>
+            </div>
+            <div class="card" onclick="revealCard(this)">
+                <div class="card-icon">📞</div>
+                <div class="card-text">How you <span class="highlight">keep calling me</span> just to hear my voice.</div>
+            </div>
+            <div class="card" onclick="revealCard(this)">
+                <div class="card-icon">🩹</div>
+                <div class="card-text">How wonderfully you <span class="highlight">take care of me</span> when I need it most.</div>
             </div>
         </div>
 
-        <!-- Interactive Question -->
-        <div class="interaction">
-            <div class="question">Can you forgive me? 🥺</div>
-            <div class="buttons">
-                <button class="btn btn-yes" onclick="showSuccess()">Yes</button>
-                <button class="btn btn-no" id="btnNo" onmouseover="moveNoBtn()">No</button>
-            </div>
+        <button class="btn" id="btn-sec3" style="display:none; margin-top: 40px;" onclick="startTypewriter(); nextSection(3)">Next ➔</button>
+    </div>
+
+    <!-- Section 4: Importance -->
+    <div class="section hidden-down" id="sec4">
+        <h2>You mean the world to me.</h2>
+        <div class="typewriter-container">
+            <span id="typewriter-text"></span>
+        </div>
+        <button class="btn" id="btn-sec4" style="display:none;" onclick="nextSection(4)">One last thing... ➔</button>
+    </div>
+
+    <!-- Section 5: Forgiveness -->
+    <div class="section hidden-down" id="sec5">
+        <h1>Will you forgive me? 🥺</h1>
+        <p>I promise to do better, be better, and treat you with the love you give me every single day.</p>
+        
+        <div class="decision-buttons">
+            <button class="btn btn-yes" onclick="showFinal()">Yes, I forgive you ❤️</button>
+            <button class="btn btn-no" id="runawayBtn" onmouseover="runAway()" ontouchstart="runAway()">No way 😤</button>
         </div>
     </div>
 
-    <!-- Success Overlay -->
-    <div class="success-message" id="successScreen">
-        <div class="big-heart">💖</div>
-        <h1>Thank you, my Rasmalai!</h1>
-        <p>I promise to make you smile every day. I love you! 💕</p>
+    <!-- Section 6: Final -->
+    <div class="section hidden-down" id="sec6">
+        <h1 style="font-size: 5rem; margin-bottom: 0;">💖</h1>
+        <h1>Thank you, my love!</h1>
+        <p>You are the best thing that ever happened to me. I love you, Rasmalai! 💕</p>
     </div>
 
     <script>
-        // Falling Hearts Particle Effect
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart-particle');
-            
-            // Randomize heart properties
-            const hearts = ['🤍', '💜', '✨', '🌸'];
-            heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
-            
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 4 + 's'; // 4s to 7s
-            heart.style.opacity = Math.random() * 0.5 + 0.3;
-            heart.style.fontSize = Math.random() * 10 + 15 + 'px'; // 15px to 25px
-
-            document.body.appendChild(heart);
-
-            // Remove heart after it falls
-            setTimeout(() => {
-                heart.remove();
-            }, 7000);
+        // Generate background stars
+        const starsContainer = document.getElementById('stars-container');
+        for(let i=0; i<100; i++) {
+            let star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.animationDuration = Math.random() * 2 + 1 + 's';
+            starsContainer.appendChild(star);
         }
 
-        // Generate hearts periodically
-        setInterval(createHeart, 300);
+        // Navigation between sections
+        function nextSection(currentId) {
+            document.getElementById(`sec${currentId}`).classList.remove('active');
+            document.getElementById(`sec${currentId}`).classList.add('hidden-up');
+            
+            setTimeout(() => {
+                document.getElementById(`sec${currentId + 1}`).classList.remove('hidden-down');
+                document.getElementById(`sec${currentId + 1}`).classList.add('active');
+            }, 500);
+        }
 
-        // Envelope Interaction
-        let isOpen = false;
-        function openEnvelope() {
-            const env = document.getElementById('envelope');
-            const clickText = document.getElementById('clickText');
-            if (!isOpen) {
-                env.querySelector('.envelope').classList.add('open');
-                clickText.style.display = 'none';
-                isOpen = true;
+        // Sorry Slider Interaction
+        function updateSorry() {
+            const slider = document.getElementById('sorrySlider');
+            const valueDisplay = document.getElementById('sorry-value');
+            const btn = document.getElementById('btn-sec2');
+            
+            if(slider.value == 100) {
+                valueDisplay.innerText = "Infinity & Beyond! 🚀";
+                btn.style.display = 'inline-block';
+            } else {
+                valueDisplay.innerText = slider.value + "%";
+                btn.style.display = 'none';
+            }
+        }
+
+        // Cards Interaction
+        let cardsRevealed = 0;
+        function revealCard(card) {
+            if(!card.classList.contains('revealed')) {
+                card.classList.add('revealed');
+                cardsRevealed++;
                 
-                // Add more hearts when opened
-                for(let i=0; i<15; i++) {
-                    setTimeout(createHeart, i*100);
+                if(cardsRevealed === 3) {
+                    setTimeout(() => {
+                        document.getElementById('btn-sec3').style.display = 'inline-block';
+                    }, 800);
                 }
             }
         }
 
-        // Playful "No" Button (Moves away when hovered or tapped)
-        const btnNo = document.getElementById('btnNo');
-        
-        function moveNoBtn() {
-            const interactionDiv = document.querySelector('.interaction');
-            const rect = interactionDiv.getBoundingClientRect();
-            
-            // Calculate random positions within the interaction div boundaries
-            // keeping a safe margin from the edges
-            const maxX = rect.width - btnNo.offsetWidth - 20;
-            const maxY = 100; // Allow it to move up and down a bit
-            
-            const randomX = Math.floor(Math.random() * (maxX - (-maxX) + 1)) + (-maxX/2);
-            const randomY = Math.floor(Math.random() * (maxY - (-maxY) + 1)) + (-maxY);
-
-            btnNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        // Typewriter Effect
+        const message = "I do care for you deeply. I want you to know exactly how much you are important to me. My life is so much brighter with you in it, and I don't ever want to lose that.";
+        let charIndex = 0;
+        function startTypewriter() {
+            if(charIndex === 0) {
+                typeChar();
+            }
         }
 
-        // For mobile touch
-        btnNo.addEventListener('touchstart', function(e) {
-            e.preventDefault(); // Prevent click
-            moveNoBtn();
-        });
-
-        // Success Screen
-        function showSuccess() {
-            const successScreen = document.getElementById('successScreen');
-            successScreen.style.display = 'flex';
-            
-            // Burst of hearts
-            for(let i=0; i<50; i++) {
-                setTimeout(createHeart, i*50);
+        function typeChar() {
+            if (charIndex < message.length) {
+                document.getElementById('typewriter-text').innerHTML += message.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeChar, 40);
+            } else {
+                setTimeout(() => {
+                    document.getElementById('btn-sec4').style.display = 'inline-block';
+                }, 500);
             }
+        }
+
+        // Runaway Button
+        const runawayBtn = document.getElementById('runawayBtn');
+        function runAway() {
+            const container = document.querySelector('.decision-buttons');
+            const maxX = container.offsetWidth - runawayBtn.offsetWidth + 100;
+            const maxY = 200;
+            
+            const randomX = Math.floor(Math.random() * maxX) - (maxX/2);
+            const randomY = Math.floor(Math.random() * maxY) - (maxY/2);
+            
+            runawayBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        // Final Celebration
+        function showFinal() {
+            nextSection(5);
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-fall';
+                const icons = ['💖', '💕', '✨', '🌸', '🥺'];
+                heart.innerText = icons[Math.floor(Math.random() * icons.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 5000);
+            }, 100);
         }
     </script>
 </body>
